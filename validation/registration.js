@@ -9,12 +9,12 @@ module.exports = function validateRegisterInput(data) {
   data.password = !isEmpty(data.password) ? data.password : ''
   data.passowrd2 = !isEmpty(data.passowrd2) ? data.passowrd2 : ''
   
-  if(Validator.isEmpty(data.name)) {
-    errors.name = 'Name field is required'
-  }
-
   if(Validator.isLength(data.name, {min: 2, max: 3})) {
     errors.name = 'Name must between 2 and 30 characters'
+  }
+
+  if(Validator.isEmpty(data.name)) {
+    errors.name = 'Name field is required'
   }
 
   if(!Validator.isEmail(data.email)) {
