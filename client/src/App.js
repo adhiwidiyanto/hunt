@@ -14,6 +14,7 @@ import Register from './components/auth/Register'
 import Login from './components/auth/Login'
 
 import './App.css'
+import { logoutUser } from './actions/authAction';
 
 // Check for token
 if(localStorage.jwtToken) {
@@ -23,6 +24,13 @@ if(localStorage.jwtToken) {
   const decoded = jwt_decode(localStorage.jwtToken)
   // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded))
+
+  const currentTime = Date.now() / 1000
+  
+  if(decoded.exp < currentTime) {
+    store.dispatch(logoutUser())
+    window.location.href = '/login'
+  }
 }
 
 class App extends Component {
